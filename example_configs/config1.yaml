@@ -1,0 +1,16 @@
+name: "config 1"
+context: |-
+  some context line 1
+  some context line 2
+  some context line 3
+steps:
+  - name: "step 1"
+    context: |-
+      some context line 1
+    request: a request
+  - name: "step 2"
+    context: |-
+      some context line 1
+      some context line 2
+    request: a request
+
