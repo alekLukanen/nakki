@@ -1,5 +1,6 @@
 #![allow(dead_code)]
 
+use core::fmt;
 use std::convert::From;
 
 fn reverse(data: (i32, bool)) -> (bool, i32) {
@@ -49,6 +50,16 @@ struct NumberMod {
 impl From<i32> for NumberMod {
     fn from(value: i32) -> Self {
         NumberMod { x: value }
+    }
+}
+
+struct Circle {
+    radius: f32,
+}
+
+impl fmt::Display for Circle {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "Circle radious is {}", self.radius)
     }
 }
 
@@ -127,4 +138,70 @@ fn main() {
     let x_mod: NumberMod = x.into();
 
     println!("x: {}, sn: {:?}, x_mod: {:?}", x, sn, x_mod);
+
+    // string conversions
+    let circle = Circle { radius: 5.0 };
+    println!("Circle: {}", circle);
+
+    let int_val1: i32 = match "00008".parse() {
+        Ok(val) => val,
+        Err(e) => {
+            println!("error: {}", e);
+            return;
+        }
+    };
+    let int_val2 = match "10".parse::<i32>() {
+        Ok(val) => val,
+        Err(e) => {
+            println!("error: {}", e);
+            return;
+        }
+    };
+
+    println!("int_val1: {}, int_val2: {}", int_val1, int_val2);
+
+    // loops
+    let mut outer_loop_val: i32 = 0;
+    let mut inner_loop_val: i32 = 0;
+
+    'outer_loop: loop {
+        println!("outer_loop index {}", outer_loop_val);
+        outer_loop_val += 1;
+        if outer_loop_val >= 5 {
+            break 'outer_loop;
+        }
+
+        loop {
+            println!("inner_loop index {}", inner_loop_val);
+            inner_loop_val += 1;
+
+            if inner_loop_val % 2 == 0 {
+                continue 'outer_loop;
+            } else {
+                break;
+            }
+        }
+
+        println!("after inner loop");
+    }
+
+    let mut looper1 = {
+        let mut count = 1;
+        loop {
+            count *= 10;
+            if count >= 44 {
+                break;
+            }
+        }
+        count
+    };
+    println!("looper1: {}", looper1);
+
+    let looper2 = loop {
+        looper1 += 1;
+        if looper1 >= 125 {
+            break looper1;
+        }
+    };
+    println!("looper2: {}", looper2);
 }
