@@ -204,4 +204,35 @@ fn main() {
         }
     };
     println!("looper2: {}", looper2);
+
+    // pattern matching tuples
+    let tuple = (2, 0, 5);
+
+    println!("tuple: {:?}", tuple);
+
+    match tuple {
+        (1, y, z) => println!("x is one - y: {}, z: {}", y, z),
+        (2, .., 5) => println!("x is two, z is 5 - y not used"),
+        (2, ..) => println!("x is two - rest not used"),
+        _ => print!("none match"),
+    }
+
+    // guards
+    let n = 7;
+
+    match n {
+        t if t > 10 => println!("n is greather than 10"),
+        t @ 5..7 => println!("n is 5 or 6, t={}", t),
+        _ => println!("n is not greater than 10"),
+    }
+
+    match some_number() {
+        Some(n) if n == 42 => println!("[...] n is {}", n),
+        Some(n) => println!("n is {}", n),
+        _ => {}
+    }
+}
+
+fn some_number() -> Option<i32> {
+    Some(42)
 }
